@@ -7,6 +7,7 @@ public class ChanCtrl : MonoBehaviour {
 	public AnimationClip[] _faceClips;
 	public string[] _faceMotionName;
 	public AudioClip[] _chanClips;
+	public AudioClip[] _hourClips;
 
 	private Animator _animator;
 	private AnimatorStateInfo _currentStateInfo;
@@ -22,6 +23,7 @@ public class ChanCtrl : MonoBehaviour {
 
 		_faceClips = Resources.LoadAll<AnimationClip>("FaceMotion");
 		_chanClips = Resources.LoadAll<AudioClip> ("ChanVoice");
+		_hourClips = Resources.LoadAll<AudioClip> ("HourClips");
 		_faceMotionName = new string[_faceClips.Length];
 
 		for (int i = 0; i < _faceClips.Length; i++) {
@@ -71,6 +73,15 @@ public class ChanCtrl : MonoBehaviour {
 			_audio.Stop();
 		}
 		_audio.clip = _chanClips [index];
+		_audio.Play ();
+	}
+
+	public void OnAskTime() {
+		int hour = System.DateTime.Now.Hour;
+		if (_audio.isPlaying) {
+			_audio.Stop();
+		}
+		_audio.clip = _hourClips [hour];
 		_audio.Play ();
 	}
 }
